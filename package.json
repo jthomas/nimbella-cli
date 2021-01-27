@@ -57,7 +57,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@types/archiver": "^3.0.0",
-    "@types/js-yaml": "^3.12.1",
+    "@types/js-yaml": "^4.0.0",
     "@types/mime-types": "2.1.0",
     "@types/node": "11.13.4",
     "@types/randomstring": "^1.1.6",
