@@ -31,7 +31,7 @@
     "chokidar": "^3.4.0",
     "commander": "nimbella/commander-cli#87a0f10a9d655a618fcd8c857b560fc49518d756",
     "debug": "^4.1.1",
-    "dotenv": "7.0.0",
+    "dotenv": "8.2.0",
     "expand-home-dir": "0.0.3",
     "get-port": "^5.1.1",
     "gtoken": "^5.0.4",
