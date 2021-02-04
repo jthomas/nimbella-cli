@@ -11,14 +11,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { NimBaseCommand, NimLogger } from 'nimbella-deployer'
-import { inBrowser } from 'nimbella-deployer'
+import { NimBaseCommand, NimLogger, inBrowser } from 'nimbella-deployer'
+
 import { flags } from '@oclif/command'
-import { default as RuntimeBaseCommand } from '@adobe/aio-cli-plugin-runtime/src/RuntimeBaseCommand'
+import RuntimeBaseCommand from '@adobe/aio-cli-plugin-runtime/src/RuntimeBaseCommand'
 const AioCommand: typeof RuntimeBaseCommand = require('@adobe/aio-cli-plugin-runtime/src/commands/runtime/action/create')
 
 export default class ActionCreate extends NimBaseCommand {
-  async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger) {
+  async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger): Promise<void> {
     screenLegal(!!args.actionPath, flags, logger)
     await this.runAio(rawArgv, argv, args, flags, logger, AioCommand)
   }
@@ -28,7 +28,7 @@ export default class ActionCreate extends NimBaseCommand {
   // Change description from what is in aio: log size limit is KB, not MB, and defaults should not be specified statically
   static flags = Object.assign({}, AioCommand.flags, {
     timeout: flags.integer({
-     char: 't',
+      char: 't',
       description: 'Timeout LIMIT in milliseconds after which the Action is terminated'
     }),
     memory: flags.integer({
@@ -45,7 +45,7 @@ export default class ActionCreate extends NimBaseCommand {
 }
 
 // Screen legality when running in the cloud
-export function screenLegal(hasActionPath: boolean, flags: any, logger: NimLogger) {
+export function screenLegal(hasActionPath: boolean, flags: any, logger: NimLogger): void {
   if (inBrowser && (hasActionPath || flags['annotation-file'] || flags['env-file'] || flags['param-file'])) {
     logger.handleError('command contains file system references and cannot run in the cloud')
   }

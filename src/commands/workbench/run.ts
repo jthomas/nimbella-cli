@@ -17,20 +17,21 @@ import { openWorkbench } from '../../workbench'
 
 // Command to open the workbench from the CLI or switch between preview and production workbench for the purpose of running a command
 export default class WorkbenchRun extends NimBaseCommand {
-  static description = "Open the Nimbella Workbench and run a command there"
+  static description = 'Open the Nimbella Workbench and run a command there'
 
-  static flags = { ...NimBaseCommand.flags,
+  static flags = {
+    ...NimBaseCommand.flags,
     preview: flags.boolean({ description: 'Open preview workbench', char: 'p' })
   }
 
   static args = [{ name: 'command', description: 'An initial command to run', required: false }]
   static strict = false
 
-  static aliases = [ 'wb:run' ]
+  static aliases = ['wb:run']
 
-  async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger) {
+  async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger): Promise<void> {
     let command: string
-    if (argv.length == 0) {
+    if (argv.length === 0) {
       command = ''
     } else {
       command = argv.join(' ')

@@ -12,34 +12,34 @@
  */
 
 import { flags } from '@oclif/command'
-import { NimBaseCommand, NimLogger } from 'nimbella-deployer'
-import { authPersister } from 'nimbella-deployer'
+import { NimBaseCommand, NimLogger, authPersister } from 'nimbella-deployer'
+
 import { queryKVStore } from '../../storage/key-value'
 
 const queryCommand = 'redis/llen'
 
 export default class LLen extends NimBaseCommand {
-    static description = 'Returns the length of the list stored at key.\
- If a key does not exist, it is interpreted as an empty list and 0 is returned.\
- An error is returned when the value stored at key is not a list.'
+    static description = `Returns the length of the list stored at key.
+ If a key does not exist, it is interpreted as an empty list and 0 is returned.
+ An error is returned when the value stored at key is not a list.`
 
     static flags = {
-        apihost: flags.string({ description: 'API host of the namespace' }),
-        ...NimBaseCommand.flags
+      apihost: flags.string({ description: 'API host of the namespace' }),
+      ...NimBaseCommand.flags
     }
 
-    static args = [{ name: 'key', description: 'The key to be queried for length', required: true}];
+    static args = [{ name: 'key', description: 'The key to be queried for length', required: true }];
 
     static aliases = ['kv:llen']
 
-    async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger) {
-        await queryKVStore(queryCommand, args, flags, authPersister)
-          .then(res => logger.log(res.value))
-          // Log the error returned by the action.
-          .catch(err =>
-            logger.handleError(
+    async runCommand(rawArgv: string[], argv: string[], args: any, flags: any, logger: NimLogger): Promise<void> {
+      await queryKVStore(queryCommand, args, flags, authPersister)
+        .then(res => logger.log(res.value))
+      // Log the error returned by the action.
+        .catch(err =>
+          logger.handleError(
               err.error?.response?.result?.error || err.message
-            )
-          );
+          )
+        )
     }
 }
